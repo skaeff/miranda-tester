@@ -15,3 +15,5 @@ How to use:
 6. run from main window and see test results  
 
 enjoy!
+
+You can use also compiled miranda-tester-net40-compiled.7z
