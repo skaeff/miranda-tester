@@ -64,7 +64,9 @@ namespace BitmapTester
                 //*
                 {
                     seq.Add(new ResizeBilinear(source.Width * (n), source.Height * n));
-                    seq.Add(Grayscale.CommonAlgorithms.RMY);
+
+                    seq.Add(new Grayscale(0.2126, 0.7152, 0.0722));
+                    //seq.Add(Grayscale.CommonAlgorithms.RMY);
                     seq.Add(new OtsuThreshold());
                     //seq.Add(new SISThreshold());
                     seq.Add(new Threshold(100));
@@ -80,7 +82,7 @@ namespace BitmapTester
                 temp = seq.Apply(source); // Apply filters on source image
 
                 var lines = new List<string>();
-                using (var page = engine.Process(temp, PageSegMode.Auto))
+                using (var page = engine.Process(temp, PageSegMode.AutoOnly))
                 {
                     var iter = page.GetIterator();
                     iter.Begin();
@@ -222,22 +224,35 @@ namespace BitmapTester
             int index = this.lbRecognizedRects.IndexFromPoint(e.Location);
             if (index != System.Windows.Forms.ListBox.NoMatches)
             {
-                var txt = lbRecognizedRects.SelectedItem.ToString();
-                txt = Reverse(txt);
-                txt = txt.Substring(0, txt.IndexOf('{'));
-                txt = Reverse(txt);
-                txt = txt.Substring(0, txt.Length - 1);
-                var data = txt.Split(',');
-
-                int n = int.Parse(tbMagnify.Text);
-                Rect = new Rectangle(int.Parse(data[0])/n, int.Parse(data[1])/n, int.Parse(data[2])/n, int.Parse(data[3])/n);
-
-                lblRect.Text = Rect.ToString();
-                //MessageBox.Show(lbRecognizedRects.SelectedItem.ToString());
-                Invalidate();
-                pbScreen.Invalidate();
-                pbScreen.Refresh();
+                DisplayItem();
             }
+        }
+
+        private void lbRecognizedRects_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DisplayItem();
+        }
+
+        void DisplayItem()
+        {
+            var txt = lbRecognizedRects.SelectedItem.ToString();
+
+            tbRecognizedText.Text = txt;
+
+            txt = Reverse(txt);
+            txt = txt.Substring(0, txt.IndexOf('{'));
+            txt = Reverse(txt);
+            txt = txt.Substring(0, txt.Length - 1);
+            var data = txt.Split(',');
+
+            int n = int.Parse(tbMagnify.Text);
+            Rect = new Rectangle(int.Parse(data[0]) / n, int.Parse(data[1]) / n, int.Parse(data[2]) / n, int.Parse(data[3]) / n);
+
+            lblRect.Text = Rect.ToString();
+            //MessageBox.Show(lbRecognizedRects.SelectedItem.ToString());
+            Invalidate();
+            pbScreen.Invalidate();
+            pbScreen.Refresh();
         }
 
     }
