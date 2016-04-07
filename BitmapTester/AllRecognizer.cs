@@ -30,19 +30,43 @@ namespace BitmapTester
             this.Close();
         }
 
+        bool _recognizeRect = false;
         private void btnRecognize_Click(object sender, EventArgs e)
         {
+            //pbScreen.ClientSize
+            if (pbScreen.Image == null)
+            {
+                MessageBox.Show("No screenshot!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (Rect == null || Rect.Width == 0 || Rect.Height == 0)
+            {
+                MessageBox.Show("No rectangle selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (WindowState != FormWindowState.Maximized)
+            {
+                MessageBox.Show("Works only in Fullscreen. Use 'Fullscreen' button", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            _recognizeRect = true;
             var lines = new List<string>();
+
+
+            var bmp = Utils.GetArea(pbScreen.Image as Bitmap, Rect);
 
             Bitmap tmp;
             float tr;
             if (rbEnglish.Checked)
-                lines = RecognizeEnText(pbScreen.Image as Bitmap, out tmp, out tr, int.Parse(tbMagnify.Text));
+                lines = RecognizeEnText(bmp, out tmp, out tr, int.Parse(tbMagnify.Text));
             else
-                lines = RecognizeRuText(pbScreen.Image as Bitmap, out tmp, out tr, int.Parse(tbMagnify.Text));
+                lines = RecognizeRuText(bmp, out tmp, out tr, int.Parse(tbMagnify.Text));
 
             lbRecognizedRects.Items.Clear();
             lbRecognizedRects.Items.AddRange(lines.ToArray());
+            
         }
 
         public List<string> RecognizeText(Bitmap source, out Bitmap temp, TesseractEngine engine, out float threshold, int magnifyNumber)
@@ -86,7 +110,7 @@ namespace BitmapTester
                 {
                     var iter = page.GetIterator();
                     iter.Begin();
-                    while (iter.Next(PageIteratorLevel.Block))
+                    do
                     {
                         var text = iter.GetText(PageIteratorLevel.Block);
                         if (string.IsNullOrEmpty(text))
@@ -98,14 +122,23 @@ namespace BitmapTester
                         var rectStr = "";
                         if (iter.TryGetBoundingBox(PageIteratorLevel.Block, out rc))
                         {
-                            rectStr = "{" + rc.X1 + "," + rc.Y1 + "," + rc.Width + "," + rc.Height + "}";
+                            int x1 = rc.X1;
+                            int y1 = rc.Y1;
+                            if (_recognizeRect)
+                            {
+                                x1 = x1 + Rect.X * n;
+                                y1 = y1 + Rect.Y * n;
+                            }
+                            rectStr = "{" + x1 + "," + y1 + "," + rc.Width + "," + rc.Height + "}";
                         }
                         else
                         {
                             rectStr = "{0,0,0,0}";
                         }
                         lines.Add(text + rectStr);
-                    }
+                    } while (iter.Next(PageIteratorLevel.Block));
+                    
+                    iter.Dispose();
                 }
 
                 return lines;
@@ -246,13 +279,65 @@ namespace BitmapTester
             var data = txt.Split(',');
 
             int n = int.Parse(tbMagnify.Text);
-            Rect = new Rectangle(int.Parse(data[0]) / n, int.Parse(data[1]) / n, int.Parse(data[2]) / n, int.Parse(data[3]) / n);
+            var rect = new Rectangle(int.Parse(data[0]) / n, int.Parse(data[1]) / n, int.Parse(data[2]) / n, int.Parse(data[3]) / n);
+
+            
+            Rect = rect;
 
             lblRect.Text = Rect.ToString();
             //MessageBox.Show(lbRecognizedRects.SelectedItem.ToString());
             Invalidate();
             pbScreen.Invalidate();
             pbScreen.Refresh();
+        }
+
+        private void pbScreen_MouseDown(object sender, MouseEventArgs e)
+        {
+            // Determine the initial rectangle coordinates...
+            RectStartPoint = e.Location;
+            Invalidate();
+        }
+
+        private void pbScreen_MouseMove(object sender, MouseEventArgs e)
+        {
+            //if (cbZoom.Checked)
+            //    UpdateZoomedImage(e);
+
+            if (e.Button != MouseButtons.Left)
+                return;
+            Point tempEndPoint = e.Location;
+            Rect.Location = new Point(
+                Math.Min(RectStartPoint.X, tempEndPoint.X),
+                Math.Min(RectStartPoint.Y, tempEndPoint.Y));
+            Rect.Size = new Size(
+                Math.Abs(RectStartPoint.X - tempEndPoint.X),
+                Math.Abs(RectStartPoint.Y - tempEndPoint.Y));
+            pbScreen.Invalidate();
+
+            lblRect.Text = Rect.ToString();
+        }
+
+        private void btnRecognizeAll_Click(object sender, EventArgs e)
+        {
+            if (pbScreen.Image == null)
+            {
+                MessageBox.Show("No screenshot!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            _recognizeRect = false;
+            var lines = new List<string>();
+
+            Bitmap tmp;
+            float tr;
+            if (rbEnglish.Checked)
+                lines = RecognizeEnText(pbScreen.Image as Bitmap, out tmp, out tr, int.Parse(tbMagnify.Text));
+            else
+                lines = RecognizeRuText(pbScreen.Image as Bitmap, out tmp, out tr, int.Parse(tbMagnify.Text));
+
+            lbRecognizedRects.Items.Clear();
+            lbRecognizedRects.Items.AddRange(lines.ToArray());
+            
         }
 
     }

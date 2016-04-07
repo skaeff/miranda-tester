@@ -11,6 +11,7 @@ using System.IO;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Automation;
+using System.Threading;
 
 namespace BitmapTester
 {
@@ -543,6 +544,20 @@ namespace BitmapTester
         {
             get { return tbUIAutoText.Text; }
             set { tbUIAutoText.Text = value; lblRect.Text = Rect.ToString(); }
+        }
+
+        private void btnPrintScreen_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Thread.Sleep(1000);
+            var bmp = Utils.GetScreenshot();
+            pbScreen.Image = bmp;
+
+            //FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            //WindowState = FormWindowState.Maximized;
+
+            Show();
+            Activate();
         }
 
        

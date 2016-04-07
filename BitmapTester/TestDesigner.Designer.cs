@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("start");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("start");
             this.pbScreen = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pnToolWindow = new System.Windows.Forms.Panel();
@@ -38,6 +38,12 @@
             this.btnClear = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpCheck = new System.Windows.Forms.TabPage();
+            this.label6 = new System.Windows.Forms.Label();
+            this.tbHeightIncrease = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbWidthIncrease = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tbMagnify = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tbRecognizedText = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -63,12 +69,7 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.lblCoords = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.tbMagnify = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tbWidthIncrease = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.tbHeightIncrease = new System.Windows.Forms.TextBox();
+            this.btnPrintScreen = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbScreen)).BeginInit();
             this.panel1.SuspendLayout();
             this.pnToolWindow.SuspendLayout();
@@ -107,6 +108,7 @@
             // pnToolWindow
             // 
             this.pnToolWindow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnToolWindow.Controls.Add(this.btnPrintScreen);
             this.pnToolWindow.Controls.Add(this.cbZoom);
             this.pnToolWindow.Controls.Add(this.tbZoomScale);
             this.pnToolWindow.Controls.Add(this.picZoom);
@@ -209,6 +211,57 @@
             this.tpCheck.Text = "Check";
             this.tpCheck.UseVisualStyleBackColor = true;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(10, 152);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(79, 13);
+            this.label6.TabIndex = 29;
+            this.label6.Text = "height increase";
+            // 
+            // tbHeightIncrease
+            // 
+            this.tbHeightIncrease.Location = new System.Drawing.Point(97, 149);
+            this.tbHeightIncrease.Name = "tbHeightIncrease";
+            this.tbHeightIncrease.Size = new System.Drawing.Size(172, 20);
+            this.tbHeightIncrease.TabIndex = 28;
+            this.tbHeightIncrease.Text = "0";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(9, 126);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(75, 13);
+            this.label5.TabIndex = 27;
+            this.label5.Text = "width increase";
+            // 
+            // tbWidthIncrease
+            // 
+            this.tbWidthIncrease.Location = new System.Drawing.Point(96, 123);
+            this.tbWidthIncrease.Name = "tbWidthIncrease";
+            this.tbWidthIncrease.Size = new System.Drawing.Size(172, 20);
+            this.tbWidthIncrease.TabIndex = 26;
+            this.tbWidthIncrease.Text = "0";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 100);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(43, 13);
+            this.label4.TabIndex = 25;
+            this.label4.Text = "magnify";
+            // 
+            // tbMagnify
+            // 
+            this.tbMagnify.Location = new System.Drawing.Point(96, 97);
+            this.tbMagnify.Name = "tbMagnify";
+            this.tbMagnify.Size = new System.Drawing.Size(172, 20);
+            this.tbMagnify.TabIndex = 24;
+            this.tbMagnify.Text = "10";
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -307,7 +360,7 @@
             this.tpAction.Location = new System.Drawing.Point(4, 22);
             this.tpAction.Name = "tpAction";
             this.tpAction.Padding = new System.Windows.Forms.Padding(3);
-            this.tpAction.Size = new System.Drawing.Size(287, 198);
+            this.tpAction.Size = new System.Drawing.Size(287, 330);
             this.tpAction.TabIndex = 1;
             this.tpAction.Text = "Action";
             this.tpAction.UseVisualStyleBackColor = true;
@@ -336,7 +389,7 @@
             this.tpUIAutomation.Location = new System.Drawing.Point(4, 22);
             this.tpUIAutomation.Name = "tpUIAutomation";
             this.tpUIAutomation.Padding = new System.Windows.Forms.Padding(3);
-            this.tpUIAutomation.Size = new System.Drawing.Size(287, 198);
+            this.tpUIAutomation.Size = new System.Drawing.Size(287, 330);
             this.tpUIAutomation.TabIndex = 2;
             this.tpUIAutomation.Text = "UIAutomation";
             this.tpUIAutomation.UseVisualStyleBackColor = true;
@@ -397,16 +450,16 @@
             // 
             // trSteps
             // 
-            this.trSteps.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.trSteps.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.trSteps.HideSelection = false;
             this.trSteps.Location = new System.Drawing.Point(304, 41);
             this.trSteps.Name = "trSteps";
-            treeNode1.Name = "Node0";
-            treeNode1.Text = "start";
+            treeNode2.Name = "Node0";
+            treeNode2.Text = "start";
             this.trSteps.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            treeNode2});
             this.trSteps.Size = new System.Drawing.Size(428, 558);
             this.trSteps.TabIndex = 10;
             this.trSteps.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trSteps_NodeMouseDoubleClick);
@@ -451,56 +504,15 @@
             this.lblCoords.TabIndex = 1;
             this.lblCoords.Text = "coordinates";
             // 
-            // label4
+            // btnPrintScreen
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 100);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(43, 13);
-            this.label4.TabIndex = 25;
-            this.label4.Text = "magnify";
-            // 
-            // tbMagnify
-            // 
-            this.tbMagnify.Location = new System.Drawing.Point(96, 97);
-            this.tbMagnify.Name = "tbMagnify";
-            this.tbMagnify.Size = new System.Drawing.Size(172, 20);
-            this.tbMagnify.TabIndex = 24;
-            this.tbMagnify.Text = "10";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 126);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(75, 13);
-            this.label5.TabIndex = 27;
-            this.label5.Text = "width increase";
-            // 
-            // tbWidthIncrease
-            // 
-            this.tbWidthIncrease.Location = new System.Drawing.Point(96, 123);
-            this.tbWidthIncrease.Name = "tbWidthIncrease";
-            this.tbWidthIncrease.Size = new System.Drawing.Size(172, 20);
-            this.tbWidthIncrease.TabIndex = 26;
-            this.tbWidthIncrease.Text = "0";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(10, 152);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(79, 13);
-            this.label6.TabIndex = 29;
-            this.label6.Text = "height increase";
-            // 
-            // tbHeightIncrease
-            // 
-            this.tbHeightIncrease.Location = new System.Drawing.Point(97, 149);
-            this.tbHeightIncrease.Name = "tbHeightIncrease";
-            this.tbHeightIncrease.Size = new System.Drawing.Size(172, 20);
-            this.tbHeightIncrease.TabIndex = 28;
-            this.tbHeightIncrease.Text = "0";
+            this.btnPrintScreen.Location = new System.Drawing.Point(304, 3);
+            this.btnPrintScreen.Name = "btnPrintScreen";
+            this.btnPrintScreen.Size = new System.Drawing.Size(145, 23);
+            this.btnPrintScreen.TabIndex = 27;
+            this.btnPrintScreen.Text = "print screen (Shift+Esc)";
+            this.btnPrintScreen.UseVisualStyleBackColor = true;
+            this.btnPrintScreen.Click += new System.EventHandler(this.btnPrintScreen_Click);
             // 
             // TestDesigner
             // 
@@ -571,5 +583,6 @@
         private System.Windows.Forms.TextBox tbHeightIncrease;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbWidthIncrease;
+        private System.Windows.Forms.Button btnPrintScreen;
     }
 }

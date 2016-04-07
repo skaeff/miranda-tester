@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.pnToolWindow = new System.Windows.Forms.Panel();
+            this.tbRecognizedText = new System.Windows.Forms.TextBox();
             this.btnRestore = new System.Windows.Forms.Button();
             this.btnFullScreen = new System.Windows.Forms.Button();
             this.btnPrintScreen = new System.Windows.Forms.Button();
@@ -42,7 +43,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.lblCoords = new System.Windows.Forms.Label();
             this.pbScreen = new System.Windows.Forms.PictureBox();
-            this.tbRecognizedText = new System.Windows.Forms.TextBox();
+            this.btnRecognizeAll = new System.Windows.Forms.Button();
             this.pnToolWindow.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbScreen)).BeginInit();
             this.SuspendLayout();
@@ -50,6 +51,7 @@
             // pnToolWindow
             // 
             this.pnToolWindow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnToolWindow.Controls.Add(this.btnRecognizeAll);
             this.pnToolWindow.Controls.Add(this.tbRecognizedText);
             this.pnToolWindow.Controls.Add(this.btnRestore);
             this.pnToolWindow.Controls.Add(this.btnFullScreen);
@@ -70,6 +72,14 @@
             this.pnToolWindow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnToolWindow_MouseDown);
             this.pnToolWindow.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnToolWindow_MouseMove);
             this.pnToolWindow.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnToolWindow_MouseUp);
+            // 
+            // tbRecognizedText
+            // 
+            this.tbRecognizedText.Location = new System.Drawing.Point(7, 239);
+            this.tbRecognizedText.Multiline = true;
+            this.tbRecognizedText.Name = "tbRecognizedText";
+            this.tbRecognizedText.Size = new System.Drawing.Size(279, 209);
+            this.tbRecognizedText.TabIndex = 29;
             // 
             // btnRestore
             // 
@@ -112,9 +122,9 @@
             // 
             // lbRecognizedRects
             // 
-            this.lbRecognizedRects.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbRecognizedRects.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lbRecognizedRects.FormattingEnabled = true;
             this.lbRecognizedRects.Location = new System.Drawing.Point(292, 28);
             this.lbRecognizedRects.Name = "lbRecognizedRects";
@@ -133,11 +143,11 @@
             // 
             // btnRecognize
             // 
-            this.btnRecognize.Location = new System.Drawing.Point(195, 175);
+            this.btnRecognize.Location = new System.Drawing.Point(8, 210);
             this.btnRecognize.Name = "btnRecognize";
-            this.btnRecognize.Size = new System.Drawing.Size(75, 23);
+            this.btnRecognize.Size = new System.Drawing.Size(122, 23);
             this.btnRecognize.TabIndex = 17;
-            this.btnRecognize.Text = "recognize";
+            this.btnRecognize.Text = "recognize rect";
             this.btnRecognize.UseVisualStyleBackColor = true;
             this.btnRecognize.Click += new System.EventHandler(this.btnRecognize_Click);
             // 
@@ -202,14 +212,18 @@
             this.pbScreen.TabIndex = 100;
             this.pbScreen.TabStop = false;
             this.pbScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.pbScreen_Paint);
+            this.pbScreen.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbScreen_MouseDown);
+            this.pbScreen.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbScreen_MouseMove);
             // 
-            // tbRecognizedText
+            // btnRecognizeAll
             // 
-            this.tbRecognizedText.Location = new System.Drawing.Point(7, 204);
-            this.tbRecognizedText.Multiline = true;
-            this.tbRecognizedText.Name = "tbRecognizedText";
-            this.tbRecognizedText.Size = new System.Drawing.Size(279, 244);
-            this.tbRecognizedText.TabIndex = 29;
+            this.btnRecognizeAll.Location = new System.Drawing.Point(136, 210);
+            this.btnRecognizeAll.Name = "btnRecognizeAll";
+            this.btnRecognizeAll.Size = new System.Drawing.Size(145, 23);
+            this.btnRecognizeAll.TabIndex = 30;
+            this.btnRecognizeAll.Text = "recognize all screenshot";
+            this.btnRecognizeAll.UseVisualStyleBackColor = true;
+            this.btnRecognizeAll.Click += new System.EventHandler(this.btnRecognizeAll_Click);
             // 
             // AllRecognizer
             // 
@@ -218,6 +232,7 @@
             this.ClientSize = new System.Drawing.Size(1284, 670);
             this.Controls.Add(this.pnToolWindow);
             this.Controls.Add(this.pbScreen);
+            this.MaximizeBox = false;
             this.Name = "AllRecognizer";
             this.Text = "AllRecognizer";
             this.pnToolWindow.ResumeLayout(false);
@@ -244,5 +259,6 @@
         private System.Windows.Forms.Button btnRestore;
         private System.Windows.Forms.Button btnFullScreen;
         private System.Windows.Forms.TextBox tbRecognizedText;
+        private System.Windows.Forms.Button btnRecognizeAll;
     }
 }
