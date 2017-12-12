@@ -17,3 +17,5 @@ How to use:
 enjoy!
 
 You can use also compiled miranda-tester-net40-compiled.7z
+
+You are welcome to support me bitcoin:1K6FZvfCRUhJVunfLZ7fzsceHTwcyXmqsM
